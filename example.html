@@ -28,6 +28,7 @@
         <label for="provider">Provider:</label><br>
         <select id="provider" name="provider" required="">
             <option value="wert">wert.io (USD)</option>
+			<option value="werteur">wert.io (EUR)</option>
 			<option value="stripe">Stripe (USA Only)</option>
 			<option value="sardine">Sardine.ai</option>
             <option value="guardarian">Guardarian</option>
@@ -65,31 +66,31 @@ const paymentLinkDiv = document.getElementById('payment-link');
 
 const minAmounts = {
   'wert': 1,
-  'guardarian': 50,
-  'particle': 5,
+  'werteur': 1,
+  'guardarian': 20,
+  'particle': 30,
   'robinhood': 5,
   'stripe': 2,
   'coinbase': 2,
   'transak': 15,
   'sardine': 30,
-  'simpleswap': 30,  
-  'banxa': 50,
+'simpleswap': 30,  
+  'banxa': 20,
   'utorg': 50,
   'simplex': 50,
-  'changenow': 50,
+  'changenow': 20,
   'transfi': 70,
   'alchemypay': 5,	
   'mercuryo': 30,
   'topper': 10,
-  'swipelux': 5,
-  'kado': 10,
-  'itez': 35,
+  'swipelux': 14,
+  'kado': 15,
   'unlimit': 10,
   'bitnovo': 10,
   'rampnetwork': 5,
   'upi': 100,
   'interac': 100,
-  'moonpay': 30
+  'moonpay': 20
 };
 
 form.addEventListener('submit', async (event) => {
@@ -122,6 +123,11 @@ form.addEventListener('submit', async (event) => {
   
     if (currency !== 'CAD' && (provider === 'interac')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports CAD currency only.<\/p>`;
+    return;
+  }
+  
+    if (currency !== 'EUR' && (provider === 'werteur')) {
+    paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports EUR currency only.<\/p>`;
     return;
   }
 	
