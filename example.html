@@ -31,6 +31,7 @@
 			<option value="werteur">wert.io (EUR)</option>
 			<option value="stripe">Stripe (USA Only)</option>
 			<option value="sardine">Sardine.ai</option>
+			<option value="revolut">Revolut</option>
             <option value="guardarian">Guardarian</option>
             <option value="particle">particle.network</option>
             <option value="transak">Transak</option>
@@ -68,6 +69,7 @@ const minAmounts = {
   'wert': 1,
   'werteur': 1,
   'guardarian': 20,
+  'revolut': 15,
   'particle': 30,
   'robinhood': 5,
   'stripe': 2,
@@ -80,7 +82,7 @@ const minAmounts = {
   'simplex': 50,
   'changenow': 20,
   'transfi': 70,
-  'alchemypay': 5,	
+  'alchemypay': 15,	
   'mercuryo': 30,
   'topper': 10,
   'swipelux': 14,
@@ -218,7 +220,7 @@ form.addEventListener('submit', async (event) => {
         }, 2500);
       });
     } else {
-      paymentLinkDiv.innerHTML = '<p style="color: red;">Invalid payout wallet. Please insert a valid USDT (Polygon) wallet address.</p>';
+      paymentLinkDiv.innerHTML = '<p style="color: red;">Invalid payout wallet. Please insert a valid USDC (Polygon) wallet address.</p>';
     }
   } catch (error) {
     console.error('Error:', error);
