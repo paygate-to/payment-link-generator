@@ -29,6 +29,7 @@
         <select id="provider" name="provider" required="">
             <option value="wert">wert.io (USD)</option>
 			<option value="werteur">wert.io (EUR)</option>
+			<option value="switchere">Switchere</option>
 			<option value="stripe">Stripe (USA Only)</option>
 			<option value="sardine">Sardine.ai</option>
 			<option value="revolut">Revolut</option>
@@ -48,6 +49,7 @@
 			<option value="unlimit">Unlimit</option>
 			<option value="bitnovo">Bitnovo</option>
 			<option value="simpleswap">SimpleSwap</option>
+			<option value="finchpay">FinchPay</option>
             <option value="topper">Topper</option>
 			<option value="swipelux">Swipelux</option>
 			<option value="kado">Kado.money</option>
@@ -68,6 +70,7 @@ const paymentLinkDiv = document.getElementById('payment-link');
 const minAmounts = {
   'wert': 1,
   'werteur': 1,
+  'switchere': 5,
   'guardarian': 20,
   'revolut': 15,
   'particle': 30,
@@ -84,6 +87,7 @@ const minAmounts = {
   'transfi': 70,
   'alchemypay': 15,	
   'mercuryo': 30,
+  'finchpay': 40,
   'topper': 10,
   'swipelux': 14,
   'kado': 15,
