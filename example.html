@@ -3,7 +3,7 @@
 <title>Generate a Payment Link</title>
 <link rel="canonical" href="https://paygate.to/payment-link/" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<head>
+</head>
 <body>
 <div class="vce-col vce-element--has-background vce-col--md-auto vce-col--xs-1 vce-col--xs-last vce-col--xs-first vce-col--sm-last vce-col--sm-first vce-col--md-first vce-col--lg-first vce-col--xl-first" id="el-b0c2d469"><div class="vce-col-inner" data-vce-do-apply="border margin background  el-b0c2d469"><div class="vce-content-background-container"></div><div class="vce-col-content" data-vce-element-content="true" data-vce-do-apply="padding el-b0c2d469"><div class="vce-text-block"><div class="vce-text-block-wrapper vce" id="el-1657c0bf" data-vce-do-apply="all el-1657c0bf"><h2 style="text-align: center;"><strong>Generate a Payment Link Without KYC</strong></h2><p>The payment link generation is intended for merchants and freelancers who don't have a website and want to get paid instantly in USDC without a bank or a merchant account.</p><p>⚠️ Warning: Your wallet should be USDC (Polygon) compatible wallet to receive the payment successfully.</p></div></div><div class="vce-raw-html"><div class="vce-raw-html-wrapper" id="el-ff361561" data-vce-do-apply="all el-ff361561"><style>.copy-text{position:relative;padding:5px;background:#fff;border:2px solid #000;border-radius:10px;display:flex;margin-top:5px;}.copy-text input.text{width:85%;padding:5px;font-size:18px;color:#555;border:none;outline:none}.copy-text button{padding:10px;background:#000;color:#fff;font-size:18px;border:none;outline:none;border-radius:10px;cursor:pointer}.copy-text button:active{background:#000}.copy-text button:before{content:"Copied";position:absolute;top:-45px;right:0;background:#000;padding:8px 10px;border-radius:20px;font-size:15px;display:none}.copy-text button:after{content:"";position:absolute;top:-20px;right:25px;width:10px;height:10px;background:#000;transform:rotate(45deg);display:none}.copy-text.active button:before,.copy-text.active button:after{display:block}</style>
     <h1>Generate a Payment Link</h1>
@@ -27,9 +27,9 @@
         
         <label for="provider">Provider:</label><br>
         <select id="provider" name="provider" required="">
+		<option value="hosted">Multi Hosted Providers</option>
             <option value="wert">wert.io (USD)</option>
 			<option value="werteur">wert.io (EUR)</option>
-			<option value="switchere">Switchere</option>
 			<option value="stripe">Stripe (USA Only)</option>
 			<option value="sardine">Sardine.ai</option>
 			<option value="revolut">Revolut</option>
@@ -69,7 +69,7 @@ const paymentLinkDiv = document.getElementById('payment-link');
 const minAmounts = {
   'wert': 1,
   'werteur': 1,
-  'switchere': 5,
+  'hosted': 1,
   'guardarian': 20,
   'revolut': 15,
   'particle': 30,
@@ -147,8 +147,12 @@ form.addEventListener('submit', async (event) => {
       const addressIn = data.address_in;
       const callbackUrl = data.callback_url;
       const customerEmail = encodeURIComponent(emailAddress);
-      const paymentLink = `https://checkout.paygate.to/process-payment.php?address=${addressIn}&amount=${amount}&provider=${provider}&email=${customerEmail}&currency=${currency}`;
-
+	  let paymentLink;
+	  if (provider === 'hosted') {
+	  paymentLink = `https://checkout.paygate.to/pay.php?address=${addressIn}&amount=${amount}&provider=${provider}&email=${customerEmail}&currency=${currency}`;
+	  } else {
+      paymentLink = `https://checkout.paygate.to/process-payment.php?address=${addressIn}&amount=${amount}&provider=${provider}&email=${customerEmail}&currency=${currency}`;
+}
       // Create a container div for the payment link
       const paymentLinkContainer = document.createElement('div');
       paymentLinkContainer.classList.add('payment-link-container');
