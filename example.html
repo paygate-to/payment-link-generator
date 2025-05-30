@@ -28,8 +28,6 @@
         <label for="provider">Provider:</label><br>
         <select id="provider" name="provider" required="">
 		<option value="hosted">Multi Hosted Providers</option>
-            <option value="wert">wert.io (USD)</option>
-			<option value="werteur">wert.io (EUR)</option>
 			<option value="stripe">Stripe (USA Only)</option>
 			<option value="sardine">Sardine.ai</option>
 			<option value="revolut">Revolut</option>
@@ -38,7 +36,6 @@
             <option value="transak">Transak</option>
             <option value="banxa">Banxa</option>
 			<option value="simplex">Simplex</option>
-            <option value="changenow">ChangeNOW</option>
             <option value="mercuryo">mercuryo.io</option>
             <option value="rampnetwork">ramp.network (USD)</option>
             <option value="moonpay">MoonPay</option>
@@ -52,7 +49,6 @@
 			<option value="finchpay">FinchPay</option>
             <option value="topper">Topper</option>
 			<option value="swipelux">Swipelux</option>
-			<option value="kado">Kado.money</option>
 			<option value="transfi">Transfi (USD)</option>
 			<option value="interac">Interac (CAD)</option>
 			<option value="upi">UPI/IMPS (INR)</option>
@@ -67,8 +63,6 @@ const form = document.getElementById('transaction-form');
 const paymentLinkDiv = document.getElementById('payment-link');
 
 const minAmounts = {
-  'wert': 1,
-  'werteur': 1,
   'hosted': 1,
   'guardarian': 20,
   'revolut': 15,
@@ -82,14 +76,12 @@ const minAmounts = {
   'banxa': 20,
   'utorg': 50,
   'simplex': 50,
-  'changenow': 20,
   'transfi': 70,
   'alchemypay': 15,	
   'mercuryo': 30,
   'finchpay': 40,
   'topper': 10,
   'swipelux': 14,
-  'kado': 15,
   'unlimit': 10,
   'bitnovo': 10,
   'rampnetwork': 4,
