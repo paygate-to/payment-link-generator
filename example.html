@@ -52,7 +52,19 @@
         
         <input style="border-radius:7px;" type="submit" value="Submit">
     </form>
+	<div id="loading-spinner" style="display:none; text-align:center; margin-top:10px;">
+    <div class="spinner"></div>
+</div>
     <div id="payment-link"></div>
+<style>
+.spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
+  background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLW9wYWNpdHk9IjAuMyI+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjAiLz4KICA8cGF0aCBkPSJNNDQgMjRhMjAgMjAgMCAwIDEtMjAgMjAiPgogICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgMjQgMjQiIHRvPSIzNjAgMjQgMjQiIGR1cj0iMXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9wYXRoPgo8L3N2Zz4=') center center no-repeat;
+  background-size: 40px 40px;
+}
+</style>
 
      <script>
 const form = document.getElementById('transaction-form');
@@ -84,6 +96,12 @@ const minAmounts = {
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
+  
+  const spinner = document.getElementById('loading-spinner');
+  paymentLinkDiv.innerHTML = ''; // clear previous results
+  spinner.style.display = 'block'; // show spinner
+  
+  
   const walletAddress = document.getElementById('wallet_address').value;
   const emailAddress = document.getElementById('email_address').value;
   const amount = parseFloat(document.getElementById('amount').value);
@@ -126,6 +144,8 @@ form.addEventListener('submit', async (event) => {
   try {
     const response = await fetch(`https://api.paygate.to/control/wallet.php?address=${walletAddress}&callback=${callback}`);
     const data = await response.json();
+	
+	spinner.style.display = 'none'; // hide spinner
 
     if (data && data.address_in) {
       const addressIn = data.address_in;
@@ -211,11 +231,13 @@ form.addEventListener('submit', async (event) => {
         }, 2500);
       });
     } else {
+	spinner.style.display = 'none';
       paymentLinkDiv.innerHTML = '<p style="color: red;">Invalid payout wallet. Please insert a valid USDC (Polygon) wallet address.</p>';
     }
   } catch (error) {
+  spinner.style.display = 'none';
     console.error('Error:', error);
-    paymentLinkDiv.innerHTML = '<p style="color: red;">An error occurred while processing the request.</p>';
+    paymentLinkDiv.innerHTML = '<p style="color: red;">An error occurred while processing the request. Make sure your wallet is valid.</p>';
   }
 });
     </script></div></div></div></div></div>
