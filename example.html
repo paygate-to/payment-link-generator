@@ -28,28 +28,6 @@
         <label for="provider">Provider:</label><br>
         <select id="provider" name="provider" required="">
 		<option value="hosted">Multi Hosted Providers</option>
-			<option value="stripe">Stripe (USA Only)</option>
-			<option value="kryptonim">Kryptonim</option>
-			<option value="cryptix">Cryptix</option>
-			<option value="sardine">Sardine.ai</option>
-			<option value="revolut">Revolut</option>
-            <option value="guardarian">Guardarian</option>
-            <option value="particle">particle.network</option>
-            <option value="transak">Transak</option>
-            <option value="banxa">Banxa</option>
-			<option value="simplex">Simplex</option>
-            <option value="mercuryo">mercuryo.io</option>
-            <option value="rampnetwork">ramp.network (USD)</option>
-            <option value="moonpay">MoonPay</option>
-			<option value="alchemypay">Alchemy Pay</option>
-			<option value="robinhood">Robinhood (USD)</option>
-			<option value="utorg">UTORG</option>
-			<option value="unlimit">Unlimit</option>
-			<option value="bitnovo">Bitnovo</option>
-            <option value="topper">Topper</option>
-			<option value="transfi">Transfi (USD)</option>
-			<option value="interac">Interac (CAD)</option>
-			<option value="upi">UPI/IMPS (INR)</option>
         </select><br><br>
         
         <input style="border-radius:7px;" type="submit" value="Submit">
@@ -71,32 +49,39 @@
      <script>
 const form = document.getElementById('transaction-form');
 const paymentLinkDiv = document.getElementById('payment-link');
+const providerSelect = document.getElementById('provider');
 
 const minAmounts = {
-  'hosted': 1,
-  'guardarian': 20,
-  'revolut': 15,
-  'particle': 30,
-  'kryptonim': 10,
-  'cryptix': 20,
-  'robinhood': 5,
-  'stripe': 2,
-  'transak': 15,
-  'sardine': 30, 
-  'banxa': 20,
-  'utorg': 50,
-  'simplex': 50,
-  'transfi': 70,
-  'alchemypay': 15,	
-  'mercuryo': 15,
-  'topper': 10,
-  'unlimit': 10,
-  'bitnovo': 10,
-  'rampnetwork': 4,
-  'upi': 100,
-  'interac': 100,
-  'moonpay': 20
+  'hosted': 1
 };
+
+// Fetch provider status
+async function loadActiveProviders() {
+  try {
+    const res = await fetch('https://api.paygate.to/control/provider-status/');
+    const data = await res.json();
+
+    if (!data.providers) return;
+
+    data.providers.forEach(provider => {
+      if (provider.status === 'active') {
+        // Save minimum dynamically
+        minAmounts[provider.id] = provider.minimum_amount;
+
+        // Create option
+        const option = document.createElement('option');
+        option.value = provider.id;
+        option.textContent = provider.provider_name;
+        providerSelect.appendChild(option);
+      }
+    });
+  } catch (e) {
+    console.error('Failed to load providers', e);
+  }
+}
+
+// Load providers on page load
+loadActiveProviders();
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -119,26 +104,31 @@ form.addEventListener('submit', async (event) => {
 
   if (amount < minAmounts[provider]) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">Minimum amount for ${provider} is $${minAmounts[provider]}</p>`;
+	spinner.style.display = 'none';
     return;
   }
 
   if (currency !== 'USD' && (provider === 'wert' || provider === 'stripe' || provider === 'transfi' || provider === 'robinhood' || provider === 'rampnetwork')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports USD currency only.</p>`;
+	spinner.style.display = 'none';
     return;
   }
   
    if (currency !== 'INR' && (provider === 'upi')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports INR currency only.<\/p>`;
+	spinner.style.display = 'none';
     return;
   }
   
     if (currency !== 'CAD' && (provider === 'interac')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports CAD currency only.<\/p>`;
+	spinner.style.display = 'none';
     return;
   }
   
     if (currency !== 'EUR' && (provider === 'werteur')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports EUR currency only.<\/p>`;
+	spinner.style.display = 'none';
     return;
   }
 	
