@@ -126,7 +126,7 @@ form.addEventListener('submit', async (event) => {
     return;
   }
   
-    if (currency !== 'EUR' && (provider === 'werteur')) {
+    if (currency !== 'EUR' && (provider === 'ideal')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports EUR currency only.<\/p>`;
 	spinner.style.display = 'none';
     return;
