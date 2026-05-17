@@ -23,6 +23,7 @@
             <option value="EUR">EUR</option>
 			<option value="CAD">CAD</option>
 			<option value="INR">INR</option>
+			<option value="SEK">SEK</option>
         </select><br>
         
         <label for="provider">Provider:</label><br>
@@ -126,7 +127,13 @@ form.addEventListener('submit', async (event) => {
     return;
   }
   
-    if (currency !== 'EUR' && (provider === 'ideal' || provider === 'klarna')) {
+  if (currency !== 'SEK' && (provider === 'klarna')) {
+    paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports SEK currency only.<\/p>`;
+	spinner.style.display = 'none';
+    return;
+  }
+  
+    if (currency !== 'EUR' && (provider === 'ideal')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports EUR currency only.<\/p>`;
 	spinner.style.display = 'none';
     return;
