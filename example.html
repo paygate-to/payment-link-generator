@@ -109,9 +109,15 @@ form.addEventListener('submit', async (event) => {
     return;
   }
 
-  if (currency !== 'USD' && (provider === 'wert' || provider === 'stripe' || provider === 'transfi' || provider === 'robinhood')) {
+  if (currency !== 'USD' && (provider === 'wert' || provider === 'transfi' || provider === 'robinhood')) {
     paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports USD currency only.</p>`;
 	spinner.style.display = 'none';
+    return;
+  }
+  
+  if (currency !== 'USD' && currency !== 'EUR' && provider === 'stripe') {
+    paymentLinkDiv.innerHTML = `<p style="color: red;">${provider} supports USD and EUR currencies only.</p>`;
+    spinner.style.display = 'none';
     return;
   }
   
