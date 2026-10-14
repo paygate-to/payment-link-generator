@@ -208,7 +208,7 @@ Full reference: [Payment Gateway API documentation](https://paygate.to/docs/paym
 
 | Message or problem | What to do |
 |---|---|
-| *Invalid payout wallet. Please insert a valid USDT (Polygon) wallet address.* | Check the wallet: it must be a Polygon address starting with `0x`, copied in full. |
+| *Invalid payout wallet. Please insert a valid USDC (Polygon) self-custodial wallet address.* | Check the wallet: it must be a Polygon address starting with `0x`, copied in full. |
 | *Minimum amount for … is …* | The amount is below that provider's minimum. Raise the amount or choose **Multi Hosted Providers** or another provider. |
 | *… supports USD currency only* (or another currency) | That provider does not accept the chosen currency. Change the currency or the provider. |
 | *An error occurred while processing the request* | The API could not be reached. Check your connection and try again. If you host the page yourself, make sure it is served over `http(s)://`, not opened as a file. |

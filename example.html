@@ -270,7 +270,7 @@ form.addEventListener('submit', async (event) => {
       });
     } else {
 	spinner.style.display = 'none';
-      paymentLinkDiv.innerHTML = '<p style="color: red;">Invalid payout wallet. Please insert a valid USDT (Polygon) wallet address.<\/p>';
+      paymentLinkDiv.innerHTML = '<p style="color: red;">Invalid payout wallet. Please insert a valid USDC (Polygon) self-custodial wallet address.<\/p>';
     }
   } catch (error) {
   spinner.style.display = 'none';
