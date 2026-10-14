@@ -86,7 +86,7 @@ python3 -m http.server 8000
 # then open http://localhost:8000/example.html
 ```
 
-The page has no build step and no backend. It only needs the browser to reach `api.paygate.to` and loads Font Awesome from cdnjs for the copy icons.
+The page has no build step, no backend and no external files: its styles and icons are inside the HTML. It only needs the browser to reach `api.paygate.to`.
 
 ## The form
 
@@ -95,7 +95,7 @@ The page has no build step and no backend. It only needs the browser to reach `a
 | **Merchant or Freelancer Wallet Address (Receiver)** | Your **USDC (Polygon)** wallet address, starting with `0x`. Use a self-custodial wallet you control (Trust Wallet, MetaMask, Rabby, a hardware wallet). Never use an exchange deposit address. |
 | **Customer or Payer Email** | The email of the person who will pay. It is passed to the payment provider. |
 | **Amount to pay** | The amount the customer pays, in the currency below, for example `49.90`. To pass card fees on to the customer, enter a slightly higher amount. |
-| **Currency** | `USD`, `EUR`, `CAD`, `INR` or `SEK` (see the restrictions below). |
+| **Currency** | `USD`, `EUR`, `CAD`, `INR`, `GBP` or `SEK` (see the restrictions below). |
 | **Provider** | **Multi Hosted Providers** (default) shows the customer a page with every provider that works for their country, amount and currency. You can also pick one provider; the list is loaded live and only shows providers that are currently active. |
 
 ## Providers, currencies and minimum amounts
@@ -145,10 +145,10 @@ Everything lives in one file, so changes are quick.
 
 ### Add or remove currencies
 
-Edit the `<select id="currency">` options. For example, to accept British pounds:
+Edit the `<select id="currency">` options. For example, to add Swiss francs:
 
 ```html
-<option value="GBP">GBP</option>
+<option value="CHF">CHF</option>
 ```
 
 If you add a currency, check that the providers you offer support it (see the table above).
@@ -183,7 +183,7 @@ PayGate.to then calls that URL with a GET request when the payment is made, addi
 
 ### Styling
 
-The page uses plain HTML and a small inline stylesheet for the copy fields (`.copy-text`). Drop it into your own layout and style the form with your site's CSS.
+The page looks like the generator on paygate.to. Its stylesheet is in the `<style>` block at the top of `example.html`: change the colours in `:root`, or remove the block and style the form, the result fields (`.copy-text`) and the spinner (`.spinner`) with your own site's CSS.
 
 ## API endpoints used
 
@@ -208,7 +208,7 @@ Full reference: [Payment Gateway API documentation](https://paygate.to/docs/paym
 
 | Message or problem | What to do |
 |---|---|
-| *Invalid payout wallet. Please insert a valid USDC (Polygon) wallet address.* | Check the wallet: it must be a Polygon address starting with `0x`, copied in full. |
+| *Invalid payout wallet. Please insert a valid USDT (Polygon) wallet address.* | Check the wallet: it must be a Polygon address starting with `0x`, copied in full. |
 | *Minimum amount for … is …* | The amount is below that provider's minimum. Raise the amount or choose **Multi Hosted Providers** or another provider. |
 | *… supports USD currency only* (or another currency) | That provider does not accept the chosen currency. Change the currency or the provider. |
 | *An error occurred while processing the request* | The API could not be reached. Check your connection and try again. If you host the page yourself, make sure it is served over `http(s)://`, not opened as a file. |
