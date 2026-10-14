@@ -109,7 +109,7 @@ The generator also checks these currency rules before creating a link:
 | Provider id | Currencies accepted by the generator |
 |---|---|
 | `wert`, `transfi`, `robinhood` | USD only |
-| `stripe` | USD or EUR |
+| `stripe` | USD (customers in the USA) or EUR (customers in the EU) |
 | `upi` | INR only |
 | `interac` | CAD only |
 | `klarna` | SEK only |
